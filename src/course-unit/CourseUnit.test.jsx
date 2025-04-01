@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import {
-  act, render, waitFor, within, screen,
+  act, render, waitFor, within, screen, cleanup,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IntlProvider } from '@edx/frontend-platform/i18n';
@@ -2038,6 +2038,10 @@ describe('<CourseUnit />', () => {
       await executeThunk(fetchCourseUnitQuery(courseId), store.dispatch);
     });
 
+    afterEach(() => {
+      cleanup();
+    });
+
     it('navigates to library content page on receive window event', async () => {
       render(<RootWrapper />);
 
@@ -2117,6 +2121,10 @@ describe('<CourseUnit />', () => {
       await executeThunk(fetchCourseUnitQuery(courseId), store.dispatch);
     });
 
+    afterEach(() => {
+      cleanup();
+    });
+
     it('navigates to split test content page on receive window event', () => {
       render(<RootWrapper />);
 
@@ -2124,7 +2132,7 @@ describe('<CourseUnit />', () => {
       expect(mockedUsedNavigate).toHaveBeenCalledWith(`/course/${courseId}/container/${newUnitId}/${sequenceId}`);
     });
 
-    it('navigates to split test content page on receive window event', () => {
+    it('navigates to group configuration page on receive window event', () => {
       const groupId = 12345;
       render(<RootWrapper />);
 
